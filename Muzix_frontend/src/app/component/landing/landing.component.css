@@ -1,0 +1,14 @@
+.landing {
+    background-image: url('../../../assets/images/landing-image-4.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding-top: 45vh;
+    padding-bottom: 45vh;
+}
+
+.lead {
+    font-size: 15pt;
+    font-family: initial;
+    font-weight: normal;
+}

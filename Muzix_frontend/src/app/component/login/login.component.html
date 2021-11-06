@@ -1,0 +1,117 @@
+<!-- Spinner starts -->
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.9)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<!-- Spinner ends -->
+
+<!-- Navbar starts -->
+<app-navbar></app-navbar>
+<!-- Navbar end -->
+
+<!-- Login/Registration starts -->
+<div class="landing">
+    <div class="wrapper">
+        <div class="title-text">
+            <div class="title login" *ngIf="isLoginClicked">Login Form</div>
+            <div class="title signup" *ngIf="isSignupClicked">Signup Form</div>
+        </div>
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" (click)="loginClicked()" [checked]="isLoginClicked">
+                <input type="radio" name="slide" id="signup" (click)="signupClicked()" [checked]="isSignupClicked">
+                <label for="login" class="slide login">Login</label>
+                <label for="signup" class="slide signup">Signup</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form name="Login" action="#" class="login" *ngIf="isLoginClicked" (ngSubmit)="login()" #f="ngForm">
+                    <div class="field">
+                        <input type="email" placeholder="Email Address*" name="email" [(ngModel)]="loginForm.email" #email="ngModel" required email>
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert" style="color: crimson;">
+                            <div *ngIf="email.errors?.required">
+                                Email address is required.
+                            </div>
+                            <div *ngIf="email.errors?.email">
+                                Email address is not valid.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Password*" name="password" minlength="8" [(ngModel)]="loginForm.password" #password="ngModel" required>
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert" style="color: crimson;">
+                            <div *ngIf="password.errors?.required">
+                                Password is required.
+                            </div>
+                            <div *ngIf="password.errors?.minlength">
+                                Password length should be greater than 8
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Login" [disabled]="email.errors?.required || email.errors?.email || password.errors?.required || password.errors?.minlength">
+                    </div>
+                    <div class="signup-link">Not a member? <a (click)="signupClicked()">Signup now</a></div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" style="background-color: rgb(185, 0, 0); color: rgb(255, 255, 255);" value="Login using Google">
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" style="background-color: rgb(0, 12, 185); color: rgb(255, 255, 255);" value="Login using Facebook">
+                    </div>
+                </form>
+                <form name="Signup" action="#" class="signup" *ngIf="isSignupClicked" (ngSubmit)="register()" #f="ngForm">
+                    <div class="field">
+                        <input type="email" placeholder="Email Address*" name="email" [(ngModel)]="signupForm.email" #email="ngModel" required email>
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert" style="color: crimson;">
+                            <div *ngIf="email.errors?.required">
+                                Email address is required.
+                            </div>
+                            <div *ngIf="email.errors?.email">
+                                Email address is not valid.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Password*" name="password" minlength="8" [(ngModel)]="signupForm.password" #password="ngModel" required>
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert" style="color: crimson;">
+                            <div *ngIf="password.errors?.required">
+                                Password is required.
+                            </div>
+                            <div *ngIf="password.errors?.minlength">
+                                Password length should be greater than 8
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="password" placeholder="Confirm password*" name="confirmPassword" minlength="8" [(ngModel)]="signupForm.confirmPassword" #confirmPassword="ngModel" required>
+                        <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="alert" style="color: crimson;">
+                            <div *ngIf="confirmPassword.errors?.required">
+                                Confirm password is required.
+                            </div>
+                            <div *ngIf="confirmPassword.errors?.minlength">
+                                Password length should be greater than 8
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Signup" [disabled]="email.errors?.required || email.errors?.email || password.errors?.required || password.errors?.minlength || confirmPassword.errors?.required || confirmPassword.errors?.minlength">
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" style="background-color: rgb(185, 0, 0); color: rgb(255, 255, 255);" value="Login using Google">
+                    </div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" style="background-color: rgb(0, 12, 185); color: rgb(255, 255, 255);" value="Login using Facebook">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login/Registration ends -->

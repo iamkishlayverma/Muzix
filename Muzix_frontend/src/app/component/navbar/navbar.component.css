@@ -1,0 +1,21 @@
+.navbar {
+    padding: 1.5rem 1rem;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: larger;
+}
+
+.navbar-brand {
+    color: #ffffff;
+}
+
+.navTop {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.navScrollDown {
+    background: rgba(3, 0, 29, 0.959);
+}
