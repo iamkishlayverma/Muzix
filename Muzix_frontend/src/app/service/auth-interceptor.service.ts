@@ -7,7 +7,7 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token: string | null = sessionStorage.getItem('jwtToken');
 
-        if (!request.url.includes("authenticate") && (token !== null || token !== undefined)) {
+        if (!request.url.includes("authenticate") && !request.url.includes("register") && (token !== null || token !== undefined)) {
             request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
         }
 

@@ -22,6 +22,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new Exception("User already exists");
         } else {
+            String username = user.getEmail().split("@")[0];
+            user.setUsername(username);
             User user1 = userRepository.save(user);
             return user1;
         }

@@ -50,55 +50,24 @@ export class LoginComponent implements OnInit {
       this.loginForm.email,
       this.loginForm.password
     );
-    console.log("loginInfo: ", this.loginInfo);
 
     this.loginRegistrationService.authenticate(this.loginInfo).subscribe(
       data => {
-        console.log("token: ", data)
-        sessionStorage.setItem('jwtToken', data)
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: 'Login Successful',
-        //   showConfirmButton: false,
-        //   timer: 1500
-        // });
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-        Toast.fire({
-          icon: 'success',
-          title: 'Signed in successfully'
-        })
+        console.log("token: ", data);
+        sessionStorage.setItem('jwtToken', data);
+        this.swalPopup('success', 'Signed in successfully!');
       },
       error => {
         this.errorMessage = error.error.message;
         this.isSignupFailed = true;
-        Swal.fire({
-          title: 'Error!',
-          text: this.errorMessage,
-          icon: 'error',
-          confirmButtonText: 'Ok'
-        });
+        this.swalPopup('error', 'Error while signing in!');
       }
     );
   }
 
   register(): void {
     if (this.signupForm.password !== this.signupForm.confirmPassword) {
-      Swal.fire({
-        title: 'Error!',
-        text: 'Passowrd and Confirm Password fields are not matching',
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      });
+      this.swalPopup('error', 'Error! Both Password and Confirm Password should match!');
     } else {
       this.loginForm.email = null;
       this.loginForm.password = null;
@@ -107,26 +76,15 @@ export class LoginComponent implements OnInit {
         this.signupForm.email,
         this.signupForm.password
       );
-      console.log("registerInfo: ", this.registerInfo);
 
       this.loginRegistrationService.register(this.registerInfo).subscribe(
         data => {
-          Swal.fire({
-            title: 'Registration Successful',
-            icon: 'success',
-            confirmButtonText: 'Ok'
-          });
-          console.log("data: ", data);
+          this.swalPopup('success', 'Registered successfully!');
+          console.log("Registered Used data: ", data);
         },
         error => {
-          this.errorMessage = error.error.message;
           this.isSignupFailed = true;
-          Swal.fire({
-            title: 'Error!',
-            text: this.errorMessage,
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
+          this.swalPopup('error', 'Error while registering!');
         }
       );
       this.loadSpinner();
@@ -140,6 +98,27 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 5000);
+  }
+
+  // This method is used to open pop-up
+  // on successful operation as well as on 
+  // failed or error operation
+  swalPopup(iconType: any, titleText: any) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    Toast.fire({
+      icon: iconType,
+      title: titleText
+    })
   }
 
 }
