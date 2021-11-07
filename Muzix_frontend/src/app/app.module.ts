@@ -16,7 +16,8 @@ import { TrackCardComponent } from './component/track-card/track-card.component'
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './component/home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './service/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

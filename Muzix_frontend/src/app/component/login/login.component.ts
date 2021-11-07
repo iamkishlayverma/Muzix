@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   signupForm: any = {};
   isSignupClicked = false;
   isSignupFailed: boolean | undefined;
-  
+
   errorMessage: any;
 
   private loginInfo: UserInfo | undefined;
@@ -52,18 +52,35 @@ export class LoginComponent implements OnInit {
     );
     console.log("loginInfo: ", this.loginInfo);
 
-    this.loginRegistrationService.login(this.loginInfo).subscribe(
+    this.loginRegistrationService.authenticate(this.loginInfo).subscribe(
       data => {
-        Swal.fire({
-          title: 'Login Successful',
+        console.log("token: ", data)
+        sessionStorage.setItem('jwtToken', data)
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'Login Successful',
+        //   showConfirmButton: false,
+        //   timer: 1500
+        // });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        Toast.fire({
           icon: 'success',
-          confirmButtonText: 'Ok'
-        });
-        console.log("data: ", data);
+          title: 'Signed in successfully'
+        })
       },
       error => {
         this.errorMessage = error.error.message;
-        this.isLoginFailed = true;
+        this.isSignupFailed = true;
         Swal.fire({
           title: 'Error!',
           text: this.errorMessage,

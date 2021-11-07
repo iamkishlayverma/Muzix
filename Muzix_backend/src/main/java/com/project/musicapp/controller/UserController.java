@@ -1,10 +1,14 @@
 package com.project.musicapp.controller;
 
+import com.project.musicapp.config.JwtUtil;
+import com.project.musicapp.model.AuthRequest;
 import com.project.musicapp.model.User;
 import com.project.musicapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,6 +17,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping("/")
     public String hello() {
@@ -31,15 +41,16 @@ public class UserController {
         return responseEntity;
     }
 
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
-        ResponseEntity responseEntity;
+    @PostMapping("/authenticate")
+    public String loginAndGenerateToken(@RequestBody AuthRequest authRequest) throws Exception {
+        String username = authRequest.getEmail().split("@")[0];
         try {
-            User user1 = userService.loginUser(user);
-            responseEntity = new ResponseEntity(user1, HttpStatus.OK);
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, authRequest.getPassword())
+            );
         } catch (Exception ex) {
-            responseEntity = new ResponseEntity<String>(ex.getMessage() , HttpStatus.CONFLICT);
+            throw new Exception("Invalid Email and Password combination");
         }
-        return responseEntity;
+        return jwtUtil.generateToken(username);
     }
 }
