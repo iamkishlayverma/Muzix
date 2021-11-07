@@ -12,6 +12,10 @@
     color: #ffffff;
 }
 
+.navbar-light .navbar-nav .nav-link:hover {
+    text-decoration: underline;
+}
+
 .navTop {
     background: rgba(0, 0, 0, 0.2);
 }

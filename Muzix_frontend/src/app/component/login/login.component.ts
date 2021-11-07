@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LoginRegistrationServiceService } from 'src/app/service/login-registration-service.service';
 import Swal from 'sweetalert2';
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
   private loginInfo: UserInfo | undefined;
   private registerInfo: UserInfo | undefined;
 
-  constructor(private spinner: NgxSpinnerService, private loginRegistrationService: LoginRegistrationServiceService) { }
+  constructor(private router: Router, private spinner: NgxSpinnerService, private loginRegistrationService: LoginRegistrationServiceService) { }
 
   ngOnInit(): void {
     this.isLoginClicked = true;
@@ -55,7 +56,9 @@ export class LoginComponent implements OnInit {
       data => {
         console.log("token: ", data);
         sessionStorage.setItem('jwtToken', data);
+        sessionStorage.setItem('currentUser', JSON.stringify(this.loginInfo?.email));
         this.swalPopup('success', 'Signed in successfully!');
+        this.router.navigateByUrl('/');
       },
       error => {
         this.errorMessage = error.error.message;
@@ -81,6 +84,7 @@ export class LoginComponent implements OnInit {
         data => {
           this.swalPopup('success', 'Registered successfully!');
           console.log("Registered Used data: ", data);
+          this.router.navigateByUrl('/');
         },
         error => {
           this.isSignupFailed = true;
