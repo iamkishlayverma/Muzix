@@ -1,5 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tokenize } from '@angular/compiler/src/ml_parser/lexer';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserInfo } from '../component/user-info';
@@ -15,7 +14,7 @@ export class LoginRegistrationServiceService {
   constructor(private httpclient: HttpClient) { }
 
   authenticate(userInfo: UserInfo): Observable<any> {
-    return this.httpclient.post<any>(this.authenticateUrl, userInfo, {responseType: 'text' as 'json'});
+    return this.httpclient.post<any>(this.authenticateUrl, userInfo, { responseType: 'text' as 'json' });
   }
 
   register(userInfo: UserInfo): Observable<any> {
@@ -23,12 +22,8 @@ export class LoginRegistrationServiceService {
   }
 
   logout() {
-    console.log("jwtToken: ", sessionStorage.getItem('jwtToken'));
-    console.log("currentUser: ", sessionStorage.getItem('currentUser'));
     sessionStorage.removeItem('jwtToken');
     sessionStorage.removeItem('currentUser');
-    console.log("jwtToken: ", sessionStorage.getItem('jwtToken'));
-    console.log("currentUser: ", sessionStorage.getItem('currentUser'));
   }
 
 }

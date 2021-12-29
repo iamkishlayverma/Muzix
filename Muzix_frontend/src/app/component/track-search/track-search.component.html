@@ -1,1 +1,12 @@
-<p>track-search works!</p>
+<!-- Navbar starts -->
+<app-navbar></app-navbar>
+<!-- Navbar end -->
+
+<div class="background">
+    <div class="centerdiv">
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" name="trackname" [(ngModel)]="trackname" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()">Search</button>
+        </form>
+    </div>
+</div>

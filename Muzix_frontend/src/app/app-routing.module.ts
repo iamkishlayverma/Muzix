@@ -5,10 +5,12 @@ import { LoginComponent } from './component/login/login.component';
 import { PlaylistComponent } from './component/playlist/playlist.component';
 import { TrackAddComponent } from './component/track-add/track-add.component';
 import { TrackDeleteComponent } from './component/track-delete/track-delete.component';
+import { TrackGetAllComponent } from './component/track-get-all/track-get-all.component';
 import { TrackSearchComponent } from './component/track-search/track-search.component';
 
 const routes: Routes = [
   { path: 'search', component: TrackSearchComponent },
+  { path: 'getAllTrackByTrackName/:trackname', component: TrackGetAllComponent },
   { path: 'savetrack/:mbid', component: TrackAddComponent },
   { path: 'myplaylist', component: PlaylistComponent },
   { path: 'deletetrack/:mbid', component: TrackDeleteComponent },

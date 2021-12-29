@@ -1,1 +1,43 @@
-<p>track-get-all works!</p>
+<!-- Navbar starts -->
+<app-navbar></app-navbar>
+<!-- Navbar end -->
+
+<div class="background">
+    <div class="container" style="text-align:center">
+        <div class="row" style="text-align:center">
+            <div *ngIf="searching" class="col-md-12" style="font-size:22px">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="true">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
+            </div>
+            <div *ngIf="!searching" class="col-md-12" style="font-size:22px; display: inline; color: rgb(255, 255, 255);">
+                Search Results for
+                <span style="font-family: Fantasy; margin: 5px;">
+                    {{ trackname }}
+                </span>
+            </div>
+            <br><br><br><br><br><br>
+        </div>
+        <div class="row" style="text-align:center">
+            <div *ngFor="let blog of songs" class="col-md-4">
+                <img class="card-img-top" src='https://wallpapercave.com/wp/UU1UZ4t.jpg' alt="Card image cap">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{blog.name| uppercase}}</div>
+                    <div class="panel-body">
+                        <p>{{blog.artist}}</p>
+                    </div>
+                    <div class="panel-footer">Listners: {{blog.listeners}}<br />
+                        <br />
+                        <span style="display: inline-block;">
+                            <a href={{blog.url}} target="_blank" class="btn btn-primary"
+                                style="border-color: #f44336; background-color: #f44336; font-size: 12px; border-radius: 12px; margin:5px;">Listen</a>
+                            <a [routerLink]="['/savetrack',blog.mbid]" class="btn btn-primary"
+                                style="font-size: 12px; border-radius: 12px; margin:5px;">Save to playlist</a>
+                        </span>
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
